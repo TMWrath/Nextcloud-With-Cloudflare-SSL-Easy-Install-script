@@ -23,6 +23,11 @@ wget -O "$DOMAIN" https://goo.gl/PLMm51
 sed -i -e "s/example.com/$DOMAIN/" "$DOMAIN"
 sudo ln -s /etc/nginx/sites-available/"$DOMAIN" /etc/nginx/sites-enabled/
 
+echo "Setting up Cloudflare FULL SSL"
+sleep 2;
+sudo mkdir /etc/nginx/ssl
+sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/nginx/ssl/nginx.key -out /etc/nginx/ssl/nginx.crt
+sudo openssl dhparam -out /etc/nginx/ssl/dhparam.pem 2048
 cd /etc/nginx/
 sudo mv nginx.conf nginx.conf.backup
 wget -O nginx.conf https://goo.gl/n8crcR
